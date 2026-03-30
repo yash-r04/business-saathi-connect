@@ -4,6 +4,9 @@ import { UserPlus, Phone, MessageSquare, ArrowRight, Clock } from "lucide-react"
 import { SidebarProvider } from "@/components/ui/sidebar";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import DashboardTopbar from "@/components/dashboard/DashboardTopbar";
+import OnboardingChecklist from "@/components/dashboard/OnboardingChecklist";
+import MobileBottomNav from "@/components/dashboard/MobileBottomNav";
+import { formatINR } from "@/lib/format";
 
 const followUps = [
   { name: "Anita Sharma", task: "Send quotation for bulk order", time: "10:00 AM", type: "call" as const },
@@ -16,23 +19,26 @@ const pipelineStages = [
   { name: "New Lead", count: 12, color: "bg-blue-100 text-blue-700" },
   { name: "Contacted", count: 8, color: "bg-accent/20 text-accent-foreground" },
   { name: "Proposal Sent", count: 5, color: "bg-primary/10 text-primary" },
+  { name: "Payment Follow-up", count: 4, color: "bg-destructive/10 text-destructive", overdue: 2 },
   { name: "Won", count: 3, color: "bg-emerald-100 text-emerald-700" },
 ];
 
 const activities = [
-  { text: "Quotation sent to Anita Sharma", time: "2 hours ago" },
+  { text: `Quotation sent to Anita Sharma — ${formatINR(48000)}`, time: "2 hours ago" },
   { text: "New lead: Patel Hardware, Ahmedabad", time: "3 hours ago" },
-  { text: "Payment received from Krishna Stores — ₹24,500", time: "5 hours ago" },
+  { text: `Payment received from Krishna Stores — ${formatINR(24500)}`, time: "5 hours ago" },
   { text: "Reminder set for Meena Textiles follow-up", time: "Yesterday" },
 ];
 
 const Dashboard = () => (
   <SidebarProvider>
     <div className="flex min-h-screen w-full">
-      <DashboardSidebar />
+      <div className="hidden md:block">
+        <DashboardSidebar />
+      </div>
       <div className="flex flex-1 flex-col">
         <DashboardTopbar />
-        <main className="flex-1 overflow-auto bg-background p-4 md:p-6">
+        <main className="flex-1 overflow-auto bg-background p-4 pb-20 md:p-6 md:pb-6">
           {/* Quick add */}
           <div className="mb-6 flex items-center justify-between">
             <div>
@@ -44,6 +50,9 @@ const Dashboard = () => (
               <span className="hidden sm:inline">Add Contact</span>
             </Button>
           </div>
+
+          {/* Onboarding checklist */}
+          <OnboardingChecklist />
 
           <div className="grid gap-6 lg:grid-cols-3">
             {/* Follow-ups */}
@@ -89,8 +98,22 @@ const Dashboard = () => (
               </CardHeader>
               <CardContent className="space-y-3">
                 {pipelineStages.map((stage) => (
-                  <div key={stage.name} className="flex items-center justify-between rounded-lg bg-secondary p-3 min-h-[48px]">
-                    <span className="text-sm font-medium text-foreground">{stage.name}</span>
+                  <div
+                    key={stage.name}
+                    className={`flex items-center justify-between rounded-lg p-3 min-h-[48px] ${
+                      stage.overdue
+                        ? "bg-destructive/5 border border-destructive/20"
+                        : "bg-secondary"
+                    }`}
+                  >
+                    <div className="flex flex-col">
+                      <span className="text-sm font-medium text-foreground">{stage.name}</span>
+                      {stage.overdue && (
+                        <span className="text-[10px] font-semibold text-destructive">
+                          {stage.overdue} overdue
+                        </span>
+                      )}
+                    </div>
                     <span className={`rounded-full px-3 py-1 text-xs font-semibold ${stage.color}`}>
                       {stage.count}
                     </span>
@@ -122,6 +145,7 @@ const Dashboard = () => (
         </main>
       </div>
     </div>
+    <MobileBottomNav />
   </SidebarProvider>
 );
 
