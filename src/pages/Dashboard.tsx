@@ -12,6 +12,7 @@ import PipelinePage from "@/pages/dashboard/PipelinePage";
 import AutomationsPage from "@/pages/dashboard/AutomationsPage";
 import MessagesPage from "@/pages/dashboard/MessagesPage";
 import SettingsPage from "@/pages/dashboard/SettingsPage";
+import InvoicesPage from "@/pages/dashboard/Invoices";
 import { formatINR } from "@/lib/format";
 
 const followUps = [
@@ -142,6 +143,7 @@ const Dashboard = () => (
           <Routes>
             <Route index element={<DashboardHome />} />
             <Route path="contacts" element={<ContactsPage />} />
+            <Route path="invoices" element={<InvoicesPage />} />
             <Route path="pipeline" element={<PipelinePage />} />
             <Route path="automations" element={<AutomationsPage />} />
             <Route path="messages" element={<MessagesPage />} />
