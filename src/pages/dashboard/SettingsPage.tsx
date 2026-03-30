@@ -93,7 +93,4 @@ const SettingsPage = () => (
   </div>
 );
 
-// Need Badge import
-import { Badge } from "@/components/ui/badge";
-
 export default SettingsPage;
