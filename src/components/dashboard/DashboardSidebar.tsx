@@ -7,6 +7,8 @@ import {
   MessageSquare,
   Settings,
   FileText,
+  Sparkles,
+  TrendingUp,
 } from "lucide-react";
 import {
   Sidebar,
@@ -27,6 +29,8 @@ const navItems = [
   { title: "Pipeline", url: "/dashboard/pipeline", icon: Kanban },
   { title: "Automations", url: "/dashboard/automations", icon: Zap },
   { title: "Messages", url: "/dashboard/messages", icon: MessageSquare },
+  { title: "AI Campaigns", url: "/dashboard/campaigns", icon: Sparkles },
+  { title: "History", url: "/dashboard/campaign-history", icon: TrendingUp },
   { title: "Settings", url: "/dashboard/settings", icon: Settings },
 ];
 
