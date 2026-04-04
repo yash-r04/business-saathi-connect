@@ -10,6 +10,7 @@ import {
   Sparkles,
   TrendingUp,
   Award,
+  Mails,
 } from "lucide-react";
 import {
   Sidebar,
@@ -25,15 +26,16 @@ import {
 
 const navItems = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
-  { title: "Contacts", url: "/dashboard/contacts", icon: Users },
+  //{ title: "Contacts", url: "/dashboard/contacts", icon: Users },
+  { title: "Inbox", url: "/dashboard/inbox", icon: Mails },
   { title: "Invoices", url: "/dashboard/invoices", icon: FileText },
   { title: "Pipeline", url: "/dashboard/pipeline", icon: Kanban },
   { title: "Automations", url: "/dashboard/automations", icon: Zap },
-  { title: "Messages", url: "/dashboard/messages", icon: MessageSquare },
+  //{ title: "Messages", url: "/dashboard/messages", icon: MessageSquare },
   { title: "AI Campaigns", url: "/dashboard/campaigns", icon: Sparkles },
-  { title: "History", url: "/dashboard/campaign-history", icon: TrendingUp },
+  //{ title: "History", url: "/dashboard/campaign-history", icon: TrendingUp },
   { title: "Government Schemes", url: "/dashboard/government-schemes", icon: Award },
-  { title: "Settings", url: "/dashboard/settings", icon: Settings },
+  //{ title: "Settings", url: "/dashboard/settings", icon: Settings },
 ];
 
 const DashboardSidebar = () => {

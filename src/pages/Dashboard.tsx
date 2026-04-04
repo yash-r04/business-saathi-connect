@@ -17,6 +17,10 @@ import CampaignsPage from "@/pages/dashboard/CampaignsPage";
 import CampaignHistoryPage from "@/pages/dashboard/CampaignHistoryPage";
 import GovernmentSchemeNavigator from "@/pages/dashboard/GovernmentSchemeNavigator";
 import { formatINR } from "@/lib/format";
+import InboxPage from "./dashboard/InboxPage";
+import ProfilePage from "./dashboard/ProfilePage";
+import AIAssistantBar from "@/components/dashboard/AIAssisstantBar";
+import ChatbotPage from "./dashboard/ChatbotPage";
 
 const followUps = [
   { name: "Anita Sharma", task: "Send quotation for bulk order", time: "10:00 AM", type: "call" as const },
@@ -52,7 +56,7 @@ const DashboardHome = () => (
         <span className="hidden sm:inline">Add Contact</span>
       </Button>
     </div>
-
+    <AIAssistantBar />
     <OnboardingChecklist />
 
     <div className="grid gap-6 lg:grid-cols-3">
@@ -154,6 +158,9 @@ const Dashboard = () => (
             <Route path="campaign-history" element={<CampaignHistoryPage />} />
             <Route path="government-schemes" element={<GovernmentSchemeNavigator />} />
             <Route path="settings" element={<SettingsPage />} />
+            <Route path="inbox" element={<InboxPage />} />
+            <Route path="profile" element={<ProfilePage />} />
+            <Route path="chatbot" element={<ChatbotPage />} />
           </Routes>
         </main>
       </div>
