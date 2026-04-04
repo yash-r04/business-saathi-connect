@@ -15,6 +15,7 @@ import SettingsPage from "@/pages/dashboard/SettingsPage";
 import InvoicesPage from "@/pages/dashboard/Invoices";
 import CampaignsPage from "@/pages/dashboard/CampaignsPage";
 import CampaignHistoryPage from "@/pages/dashboard/CampaignHistoryPage";
+import GovernmentSchemeNavigator from "@/pages/dashboard/GovernmentSchemeNavigator";
 import { formatINR } from "@/lib/format";
 
 const followUps = [
@@ -151,6 +152,7 @@ const Dashboard = () => (
             <Route path="messages" element={<MessagesPage />} />
             <Route path="campaigns" element={<CampaignsPage />} />
             <Route path="campaign-history" element={<CampaignHistoryPage />} />
+            <Route path="government-schemes" element={<GovernmentSchemeNavigator />} />
             <Route path="settings" element={<SettingsPage />} />
           </Routes>
         </main>

@@ -9,6 +9,7 @@ import {
   FileText,
   Sparkles,
   TrendingUp,
+  Award,
 } from "lucide-react";
 import {
   Sidebar,
@@ -31,6 +32,7 @@ const navItems = [
   { title: "Messages", url: "/dashboard/messages", icon: MessageSquare },
   { title: "AI Campaigns", url: "/dashboard/campaigns", icon: Sparkles },
   { title: "History", url: "/dashboard/campaign-history", icon: TrendingUp },
+  { title: "Government Schemes", url: "/dashboard/government-schemes", icon: Award },
   { title: "Settings", url: "/dashboard/settings", icon: Settings },
 ];
 
