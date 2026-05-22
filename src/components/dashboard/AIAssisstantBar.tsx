@@ -1,53 +1,88 @@
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Bot } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const AIAssistantBar = () => {
-  const [query, setQuery] = useState("");
+
   const navigate = useNavigate();
 
-  const handleAsk = () => {
-    if (!query) return;
-
-    navigate("/dashboard/chatbot", {
-      state: { query },
-    });
-  };
-
   return (
-    <div className="mb-6 rounded-xl border bg-secondary/50 p-4">
-      <div className="flex gap-2">
-        <Input
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Ask your business anything... 🤖"
-          className="bg-background"
-        />
-        <Button onClick={handleAsk}>Ask</Button>
-      </div>
 
-      {/* Suggestions */}
-      <div className="mt-3 flex flex-wrap gap-2">
-        {[
-          "Show pending payments",
-          "Top clients",
-          "Create invoice",
-        ].map((q) => (
-          <button
-            key={q}
-            onClick={() =>
-              navigate("/dashboard/chatbot", {
-                state: { query: q },
-              })
-            }
-            className="rounded-full bg-primary/10 px-3 py-1 text-xs hover:bg-primary/20"
-          >
-            {q}
-          </button>
-        ))}
-      </div>
-    </div>
+    <>
+
+      {/* FLOATING AI BUTTON */}
+      <button
+        onClick={() =>
+          navigate("/dashboard/chatbot")
+        }
+
+        className="
+          fixed
+          bottom-6
+          right-6
+          z-50
+
+          flex
+          items-center
+          gap-2
+
+          rounded-full
+
+          bg-gradient-to-r
+          from-cyan-950
+          to-teal-600
+
+          px-5
+          py-3
+
+          text-white
+
+          shadow-2xl
+
+          transition-all
+          duration-300
+
+          hover:scale-105
+          hover:shadow-[0_0_30px_rgba(168,85,247,0.5)]
+
+          active:scale-95
+        "
+      >
+
+        {/* ICON */}
+        <div
+          className="
+            flex
+            h-10
+            w-10
+            items-center
+            justify-center
+
+            rounded-full
+
+            bg-white/20
+            backdrop-blur-sm
+          "
+        >
+          <Bot className="h-5 w-5" />
+        </div>
+
+        {/* TEXT */}
+        <div className="hidden sm:block text-left">
+
+          <p className="text-sm font-semibold">
+            Vyapara AI
+          </p>
+
+          <p className="text-xs text-white/80">
+            Ask anything
+          </p>
+
+        </div>
+
+      </button>
+
+    </>
+
   );
 };
 
