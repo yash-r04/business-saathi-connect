@@ -32,39 +32,64 @@ app.post("/chat", async (req, res) => {
 
     const { messages } = req.body;
 
-    const command = new ConverseCommand({
+    console.log("Incoming:", messages);
 
-      modelId:
-        "amazon.nova-lite-v1:0",
+   const formattedMessages = messages
 
-      messages: messages.map((msg) => ({
-  role:
-    msg.sender === "user"
-      ? "user"
-      : "assistant",
+  // remove empty messages
+  .filter((msg) => msg.text)
 
-  content: [
-    {
-      text: msg.text
+  // make sure first message is user
+  .filter((msg, index) => {
+
+    if (
+      index === 0 &&
+      msg.sender !== "user"
+    ) {
+      return false;
     }
-  ]
-})),
 
-      inferenceConfig: {
-        temperature: 0.7,
-        maxTokens: 300
+    return true;
+  })
+
+  .map((msg) => ({
+
+    role:
+      msg.sender === "user"
+        ? "user"
+        : "assistant",
+
+    content: [
+      {
+        text: msg.text
       }
-    });
+    ]
+  }));
+
+    const command =
+      new ConverseCommand({
+
+        modelId:
+          "amazon.nova-lite-v1:0",
+
+        messages: formattedMessages,
+
+        inferenceConfig: {
+          temperature: 0.7,
+          maxTokens: 300
+        }
+      });
 
     const response =
       await client.send(command);
+
     console.log(
-  JSON.stringify(response, null, 2)
-);
+      JSON.stringify(response, null, 2)
+    );
 
     const reply =
-  response.output?.message?.content?.[0]?.text
-  || "No AI response";
+      response.output.message.content[0].text;
+
     res.json({ reply });
 
   } catch (err) {
@@ -72,7 +97,7 @@ app.post("/chat", async (req, res) => {
     console.log(err);
 
     res.status(500).json({
-      error: "AI failed"
+      error: err.message
     });
   }
 });

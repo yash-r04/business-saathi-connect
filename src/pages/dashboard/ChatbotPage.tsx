@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
+import ReactMarkdown from "react-markdown";
 type Message = {
   text: string;
   sender: "user" | "bot";
@@ -9,16 +9,14 @@ type Message = {
 
 const ChatbotPage = () => {
 
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      text: "Hi 👋 I'm Vyapara AI. How can I help your business today?",
-      sender: "bot"
-    }
-  ]);
+  const [messages, setMessages] =
+    useState<Message[]>([]);
 
-  const [input, setInput] = useState("");
+  const [input, setInput] =
+    useState("");
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] =
+    useState(false);
 
   const handleSend = async () => {
 
@@ -29,10 +27,12 @@ const ChatbotPage = () => {
       sender: "user"
     };
 
-    setMessages((prev) => [
-      ...prev,
+    const updatedMessages = [
+      ...messages,
       userMsg
-    ]);
+    ];
+
+    setMessages(updatedMessages);
 
     const currentInput = input;
 
@@ -53,18 +53,17 @@ const ChatbotPage = () => {
           },
 
           body: JSON.stringify({
-  messages: [
-    ...messages,
-    userMsg
-  ]
-})
+            messages: updatedMessages
+          })
         }
       );
 
       const data = await res.json();
 
       const botMsg: Message = {
-        text: data.reply,
+        text:
+          data.reply ||
+          "No response from AI",
         sender: "bot"
       };
 
@@ -93,11 +92,25 @@ const ChatbotPage = () => {
   };
 
   return (
+
     <div className="flex h-full flex-col">
 
       {/* CHAT AREA */}
       <div className="flex-1 space-y-3 overflow-y-auto p-4">
 
+        {/* WELCOME MESSAGE */}
+        {messages.length === 0 && (
+
+          <div className="rounded-xl bg-secondary p-4 text-sm">
+
+            Hi 👋 I'm Vyapara AI.
+            How can I help your business today?
+
+          </div>
+
+        )}
+
+        {/* CHAT MESSAGES */}
         {messages.map((msg, i) => (
 
           <div
@@ -108,15 +121,20 @@ const ChatbotPage = () => {
                 : "bg-secondary"
             }`}
           >
-            {msg.text}
+            <ReactMarkdown>
+  {msg.text}
+</ReactMarkdown>
           </div>
 
         ))}
 
+        {/* LOADING */}
         {loading && (
 
           <div className="max-w-xs rounded-xl bg-secondary px-4 py-3 text-sm text-muted-foreground">
+
             Vyapara AI is thinking...
+
           </div>
 
         )}
@@ -128,11 +146,15 @@ const ChatbotPage = () => {
 
         <Input
           value={input}
+
           onChange={(e) =>
             setInput(e.target.value)
           }
+
           placeholder="Ask about invoices, payments, analytics..."
+
           onKeyDown={(e) => {
+
             if (e.key === "Enter") {
               handleSend();
             }
@@ -144,6 +166,7 @@ const ChatbotPage = () => {
         </Button>
 
       </div>
+
     </div>
   );
 };
